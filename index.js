@@ -84,7 +84,7 @@ module.exports = function leafletImage(map, callback) {
         var ctx = canvas.getContext('2d'),
             bounds = map.getPixelBounds(),
             zoom = map.getZoom(),
-            tileSize = layer.options.tileSize;
+            tileSize = layer.getTileSize().x;
 
         if (zoom > layer.options.maxZoom ||
             zoom < layer.options.minZoom ||
@@ -113,6 +113,8 @@ module.exports = function leafletImage(map, callback) {
             if (layer._adjustTilePoint) {
                 layer._adjustTilePoint(tilePoint);
             }
+            
+            tilePoint.z = zoom;
 
             var tilePos = originalTilePoint
                 .scaleBy(new L.Point(tileSize, tileSize))
